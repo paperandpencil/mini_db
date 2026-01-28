@@ -58,16 +58,17 @@ def handle_client(conn, addr):
             # NOTE. "match" is only available v3.10 & later
             match mode:
                 case 1:
-                    if key in db:
+                    if key and key in db:
                         response = f"0 {db[key]}\n"
                     else:
                         response = "1\n"
                 case 2:
-                    db[key] = val
-                    # save_db()
-                    response = "0\n"
+                    if key and val:
+                        db[key] = val
+                        # save_db()
+                        response = "0\n"
                 case 3:
-                    if key in db:
+                    if key and key in db:
                         del db[key]
                         response = "0\n"
                     else:
